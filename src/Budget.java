@@ -1,4 +1,7 @@
 import java.util.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class Budget {
     static Scanner input = new Scanner (System.in);
     static String userResponse;
@@ -46,30 +49,36 @@ public class Budget {
         System.out.println("Please follow this model: Expense,100");
         userResponse = input.nextLine();
 
-        Map<String, Integer> expenses = new HashMap<>();
+        Map<String, BigDecimal> expenses = new HashMap<>();
         String expenseName;
-        Integer expenseCost;
-
+        BigDecimal expenseCost;
+        // TODO: Add categories to the expenses like subscriptions, utilities and whatnot.
 
         while (!userResponse.equalsIgnoreCase("DONE")) {
             /* TODO: Add some logic to ask them are they sure and give them the option
              *       to correct an entry (replace whole entry or the name / $ amount separately.
              */
 
-
-            expenseName = userResponse.split(",")[0];
-            expenseCost = Integer.valueOf( userResponse.split(",")[1] );
-
+            expenseName = userResponse.split(",")[0].trim();
+            double rawExpense = Double.parseDouble(userResponse.split(",")[1].trim());
+            expenseCost = BigDecimal.valueOf(rawExpense);
             expenses.put(expenseName, expenseCost);
 
-            System.out.println("You entered: " + expenseName + " : " + expenses.get(expenseName));
+            System.out.println( "You entered: " + expenseName + " : " + expenses.get(expenseName) );
 
             System.out.println("Enter your next expense:");
             userResponse = input.nextLine();
-
-//            userResponse = input.nextLine();
-
         }
+
+
+
+//        double remaining = expenseName;
+        System.out.println("Currently, your budget is the following: ");
+
+
+
+
+
 
 
     }
