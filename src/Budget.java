@@ -1,92 +1,70 @@
-import java.util.*;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Budget {
-    static Scanner input = new Scanner (System.in);
-    static String userResponse;
+    Map<String, BigDecimal> expenses = new HashMap<>();
+    String expenseName;
+    BigDecimal expenseCost;
+    int income;
+    BigDecimal totalExpenses = BigDecimal.valueOf(0.0);
+
+    //TODO: Add logic to remove an item from the budget in this method. Ask them what they wanna do and allat.
+    //TODO: Make a method to tally all the expenses.
 
 
-    public static void main (String[] args) {
-        System.out.println("Hey! Welcome to Eddie's Budget App!");
-        System.out.println("What would you like to do today?");
-        System.out.println("Please enter \"1\" to Create Budget, \"2\" to Modify Budget, or \"3\" to Delete Budget");
-
-        userResponse = input.nextLine();
-
-        if (userResponse.contains("1")) {
-            createBudget();
-        }
-        else if (userResponse.contains("2")) {
-            modifyBudget();
-
-        }
-        else if (userResponse.contains("3")) {
-            System.out.println("Are you SURE? THIS ACTION CANNOT BE UNDONE!");
-            System.out.println("Enter Y/N");
-            userResponse = input.nextLine();
-            // Call this method with the Budget Name.
-            deleteBudget();
-        }
-
+    public String getBudgetName() {
+        return budgetName;
     }
 
+    public void setBudgetName(String budgetName) {
+        this.budgetName = budgetName;
+    }
 
-    public static void createBudget() {
-        //TODO: Give them the option to give each budget a name, do multiple budgets (a map with the name and budget
-        // a the value?)
+    String budgetName;
+    // TODO: Add categories to the expenses like subscriptions, utilities and whatnot.
 
-        System.out.println("What is your monthly income post-tax on average? (no commas)");
-        userResponse = input.nextLine();
-        System.out.println();
 
-        int income = Integer.parseInt(userResponse);
-        System.out.println("Your INCOME is listed as: " + income);
-        System.out.println();
+    public Budget (String budgetName) {
+        this.budgetName = budgetName;
+    }
 
-        System.out.println("What are your expenses?");
-        System.out.println("Enter \"DONE\" when you are done!");
-        System.out.println("Please follow this model: Expense,100");
-        userResponse = input.nextLine();
+    public int getIncome() {
+        return income;
+    }
 
-        Map<String, BigDecimal> expenses = new HashMap<>();
-        String expenseName;
-        BigDecimal expenseCost;
-        // TODO: Add categories to the expenses like subscriptions, utilities and whatnot.
+    public void setIncome(int income) {
+        this.income = income;
+    }
 
-        while (!userResponse.equalsIgnoreCase("DONE")) {
-            /* TODO: Add some logic to ask them are they sure and give them the option
-             *       to correct an entry (replace whole entry or the name / $ amount separately.
-             */
+    public Map<String, BigDecimal> getExpenses() {
+        return expenses;
+    }
 
-            expenseName = userResponse.split(",")[0].trim();
-            double rawExpense = Double.parseDouble(userResponse.split(",")[1].trim());
-            expenseCost = BigDecimal.valueOf(rawExpense);
-            expenses.put(expenseName, expenseCost);
+    public void setExpenses(Map<String, BigDecimal> expenses) {
+        this.expenses = expenses;
+    }
 
-            System.out.println( "You entered: " + expenseName + " : " + expenses.get(expenseName) );
+    public String getExpenseName() {
+        return expenseName;
+    }
 
-            System.out.println("Enter your next expense:");
-            userResponse = input.nextLine();
+    public void setExpenseName(String expenseName) {
+        this.expenseName = expenseName;
+    }
+
+    public BigDecimal getExpenseCost() {
+        return expenseCost;
+    }
+
+    public void setExpenseCost(BigDecimal expenseCost) {
+        this.expenseCost = expenseCost;
+    }
+
+    public BigDecimal tallyExpenses () {
+        for (String expenseName : expenses.keySet()) {
+            this.totalExpenses = this.totalExpenses.add( expenses.get(expenseName) );
         }
-
-
-
-//        double remaining = expenseName;
-        System.out.println("Currently, your budget is the following: ");
-
-
-
-
-
-
-
+        return this.totalExpenses;
     }
-
-    public static void modifyBudget() {
-    }
-
-    public static void deleteBudget() {
-    }
-
 }
