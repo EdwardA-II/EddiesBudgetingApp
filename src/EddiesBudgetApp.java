@@ -7,13 +7,22 @@ public class EddiesBudgetApp {
     static Scanner input;
     static String userResponse;
 
-    // Comment out when you want to put in the input manually.
     static {
         try {
-            input = new Scanner(new File("budget_auto_input.txt"));
+            // General Testing - Happy Path
+//            input = new Scanner(new File("budget_auto_input.txt"));
+
+            // Negative Testing - Incorrect Intro Option
+            input = new Scanner(new File("budget_auto_input_neg_intro.txt"));
+
+            // Another testing scenario - goes here
+//            input = new Scanner(new File("budget_auto_input.txt"));
+
+            // Another testing scenario - goes here
+//            input = new Scanner(new File("budget_auto_input.txt"));
         }
         catch (FileNotFoundException e) {
-            System.err.println("Input file not found.");
+            System.err.println("Auto Input file not found.");
             System.exit(1);
         }
     }
@@ -22,34 +31,30 @@ public class EddiesBudgetApp {
     public static void main(String[] args) {
         System.out.println("Hey! Welcome to Eddie's Budget App!");
         System.out.println("What would you like to do today?");
-        System.out.println("Please enter \"1\" to Create Budget, \"2\" to Modify Budget, or \"3\" to Delete Budget");
+        System.out.println("Please enter \"1\" to Create Budget, \"2\" to Modify Budget, \"3\" to Delete Budget, or \"4\" to Exit the Application");
 
         userResponse = input.nextLine();
 
         Map<String, Budget> budgetList = new HashMap<>();
 
-        //TODO: Refactor to look less uglass.
-        while ( !userResponse.equalsIgnoreCase("1") &&  !userResponse.equalsIgnoreCase("2")
-                && !userResponse.equalsIgnoreCase("3") )
-        {
-            if (userResponse.contains("1")) {
-                createBudget(budgetList);
-            }
-            else if (userResponse.contains("2")) {
-                modifyBudget(budgetList);
-            }
-            else if (userResponse.contains("3")) {
-                deleteBudget(budgetList);
-            }
-            else {
-                System.out.println("Invalid option. Please enter 1, 2, or 3.");
-                userResponse = input.nextLine();
-            }
+        Set<String> validOptions = Set.of("1", "2", "3", "4");
+
+        // Validate user input and do not continue until they make a valid entry.
+        while (!validOptions.contains(userResponse)) {
+            System.out.println("Invalid option. Please enter 1, 2, or 3:");
+            userResponse = input.nextLine();
         }
 
-
-
-
+        // At this point, the userResponse is guaranteed to be valid
+        switch (userResponse) {
+            case "1" -> createBudget(budgetList);
+            case "2" -> modifyBudget(budgetList);
+            case "3" -> deleteBudget(budgetList);
+            case "4" -> {
+                System.out.println("Goodbye 👋");
+                System.exit(0);
+            }
+        }
     }
 
     public static void createBudget(Map<String, Budget> budgetList) {
@@ -121,10 +126,13 @@ public class EddiesBudgetApp {
     public static void deleteBudget(Map<String, Budget> budgetList) {
         System.out.println("Which budget would you like to delete");
         userResponse = input.nextLine();
+        String budgetName = userResponse;
 
         System.out.println("Are you SURE? THIS ACTION CANNOT BE UNDONE!");
         System.out.println("Enter Y/N");
         userResponse = input.nextLine();
+
+        budgetList.remove(budgetName);
     }
 
 }
