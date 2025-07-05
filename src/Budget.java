@@ -3,6 +3,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Budget {
+    String budgetName;
     Map<String, BigDecimal> expenses = new HashMap<>();
     String expenseName;
     BigDecimal expenseCost;
@@ -13,19 +14,18 @@ public class Budget {
     //TODO: Make a method to tally all the expenses.
 
 
+    // TODO: Add categories to the expenses like subscriptions, utilities and whatnot.
+
+
+    public Budget () {
+        this.budgetName = budgetName;
+    }
+
     public String getBudgetName() {
         return budgetName;
     }
 
     public void setBudgetName(String budgetName) {
-        this.budgetName = budgetName;
-    }
-
-    String budgetName;
-    // TODO: Add categories to the expenses like subscriptions, utilities and whatnot.
-
-
-    public Budget (String budgetName) {
         this.budgetName = budgetName;
     }
 

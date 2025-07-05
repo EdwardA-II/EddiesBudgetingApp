@@ -19,7 +19,7 @@ public class EddiesBudgetApp {
     }
 
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         System.out.println("Hey! Welcome to Eddie's Budget App!");
         System.out.println("What would you like to do today?");
         System.out.println("Please enter \"1\" to Create Budget, \"2\" to Modify Budget, or \"3\" to Delete Budget");
