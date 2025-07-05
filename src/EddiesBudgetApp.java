@@ -1,9 +1,22 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 import java.math.BigDecimal;
 
 public class EddiesBudgetApp {
-    static Scanner input = new Scanner (System.in);
+    static Scanner input;
     static String userResponse;
+
+    // Comment out when you want to put in the input manually.
+    static {
+        try {
+            input = new Scanner(new File("budget_auto_input.txt"));
+        }
+        catch (FileNotFoundException e) {
+            System.err.println("Input file not found.");
+            System.exit(1);
+        }
+    }
 
 
     public static void main (String[] args) {
@@ -13,33 +26,40 @@ public class EddiesBudgetApp {
 
         userResponse = input.nextLine();
 
-        if (userResponse.contains("1")) {
-            createBudget();
-        }
-        else if (userResponse.contains("2")) {
-            modifyBudget();
+        Map<String, Budget> budgetList = new HashMap<>();
 
+        //TODO: Refactor to look less uglass.
+        while ( !userResponse.equalsIgnoreCase("1") &&  !userResponse.equalsIgnoreCase("2")
+                && !userResponse.equalsIgnoreCase("3") )
+        {
+            if (userResponse.contains("1")) {
+                createBudget(budgetList);
+            }
+            else if (userResponse.contains("2")) {
+                modifyBudget(budgetList);
+            }
+            else if (userResponse.contains("3")) {
+                deleteBudget(budgetList);
+            }
+            else {
+                System.out.println("Invalid option. Please enter 1, 2, or 3.");
+                userResponse = input.nextLine();
+            }
         }
-        else if (userResponse.contains("3")) {
-            System.out.println("Are you SURE? THIS ACTION CANNOT BE UNDONE!");
-            System.out.println("Enter Y/N");
-            userResponse = input.nextLine();
-            // Call this method with the Budget Name.
-            deleteBudget();
-        }
+
 
 
 
     }
 
-
-    public static void createBudget() {
+    public static void createBudget(Map<String, Budget> budgetList) {
         //TODO: Give them the option to give each budget a name, do multiple budgets (a map with the name and budget
         // as the value?)
 
         System.out.println("What would you like to name this budget?");
         String budgetName = input.nextLine();
-        Budget budget = new Budget(budgetName);
+        Budget budget = new Budget();
+        budget.setBudgetName(budgetName);
 
 
         System.out.println("What is your monthly income post-tax on average? (no commas)");
@@ -53,7 +73,7 @@ public class EddiesBudgetApp {
         System.out.println();
 
         System.out.println("What are your expenses?");
-        System.out.println("Please follow this model: Expense,100");
+        System.out.println("Please follow this model: Expense,100.50");
         System.out.println("Enter \"DONE\" when you are done!");
         userResponse = input.nextLine();
 
@@ -83,6 +103,7 @@ public class EddiesBudgetApp {
         budget.setExpenses(expenses);
 
         System.out.println("Your total expenses are: " + budget.tallyExpenses());
+        budgetList.put(budgetName, budget);
 
 
 //        double remaining = expenseName;
@@ -94,10 +115,16 @@ public class EddiesBudgetApp {
 
     }
 
-    public static void modifyBudget() {
+    public static void modifyBudget(Map<String, Budget> budgetList) {
     }
 
-    public static void deleteBudget() {
+    public static void deleteBudget(Map<String, Budget> budgetList) {
+        System.out.println("Which budget would you like to delete");
+        userResponse = input.nextLine();
+
+        System.out.println("Are you SURE? THIS ACTION CANNOT BE UNDONE!");
+        System.out.println("Enter Y/N");
+        userResponse = input.nextLine();
     }
 
 }
