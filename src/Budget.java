@@ -10,15 +10,13 @@ public class Budget {
     int income;
     BigDecimal totalExpenses = BigDecimal.valueOf(0.0);
 
-    //TODO: Add logic to remove an item from the budget in this method. Ask them what they wanna do and allat.
-    //TODO: Make a method to tally all the expenses.
-
-
+    // TODO: Add logic to remove an item from the budget in this method. Ask them what they wanna do and allat.
     // TODO: Add categories to the expenses like subscriptions, utilities and whatnot.
+    // TODO: Perhaps I need to incorporate a toString method to iterate thru the expenses.
 
 
     public Budget () {
-        this.budgetName = budgetName;
+
     }
 
     public String getBudgetName() {
@@ -66,5 +64,10 @@ public class Budget {
             this.totalExpenses = this.totalExpenses.add( expenses.get(expenseName) );
         }
         return this.totalExpenses;
+    }
+
+    public void displayExpenses() {
+        for (String expenseName : expenses.keySet()) {
+        }
     }
 }

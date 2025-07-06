@@ -27,24 +27,30 @@ public class EddiesBudgetApp {
 
         Map<String, Budget> budgetList = new HashMap<>();
 
-        Set<String> validOptions = Set.of("1", "2", "3", "4");
+        Set<String> validOptions = Set.of("1", "2", "3", "4", "5");
 
         // Validate user input and do not continue until they make a valid entry.
         while (!validOptions.contains(userResponse)) {
-            System.out.println("Invalid option. Please enter 1, 2, 3, 4:");
+            System.out.println("Invalid option. Please enter 1, 2, 3, 4, 5:");
             userResponse = input.nextLine();
         }
 
+        // TODO: surround this with another while loop so the customer can access other options? and maybe put the main menu in
+            // another method? if i use a while loop, the last display method wont be necessary.
         // At this point, the userResponse is guaranteed to be valid
         switch (userResponse) {
             case "1" -> createBudget(budgetList);
             case "2" -> modifyBudget(budgetList);
             case "3" -> deleteBudget(budgetList);
-            case "4" -> {
+            case "4" -> displayBudget(budgetList);
+            case "5" -> {
                 System.out.println("Goodbye 👋");
                 System.exit(0);
             }
         }
+
+        displayBudget(budgetList);
+
     }
 
     public static void createBudget(Map<String, Budget> budgetList) {
@@ -71,12 +77,8 @@ public class EddiesBudgetApp {
         Map<String, BigDecimal> expenses = new HashMap<>();
         String expenseName;
         BigDecimal expenseCost;
-        // TODO: Add categories to the expenses like subscriptions, utilities and whatnot.
-        //  also make the logic to have them pick and choose which expense to edit.
 
         while (!userResponse.equalsIgnoreCase("DONE")) {
-
-
             expenseName = userResponse.split(",")[0].trim();
             double rawExpense = Double.parseDouble(userResponse.split(",")[1].trim());
             expenseCost = BigDecimal.valueOf(rawExpense);
@@ -110,8 +112,16 @@ public class EddiesBudgetApp {
         budgetList.remove(budgetName);
     }
 
-    public static void displayBudget() {
-        System.out.println();
+    public static void displayBudget(Map<String, Budget> budgetList) {
+        System.out.println("Which budget would you like to display?");
+        String budgetName = input.nextLine();
+        Budget budgetToDisplay = budgetList.get(budgetName);
+        System.out.println("Your income is listed as: " + budgetToDisplay.getIncome());
+
+        //* TODO: how do i display the expense : expenseCost....? maybe it *should* be in the budget class.
+        for (String expenseName : budgetToDisplay.expenses.keySet()) {
+            System.out.println(budgetToDisplay.getExpenseName() + budgetToDisplay.getExpenseCost());
+        }
     }
 
 }
