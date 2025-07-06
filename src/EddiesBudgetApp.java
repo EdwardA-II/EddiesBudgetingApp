@@ -9,24 +9,14 @@ public class EddiesBudgetApp {
 
     static {
         try {
-            // General Testing - Happy Path
-//            input = new Scanner(new File("budget_auto_input.txt"));
-
             // Negative Testing - Incorrect Intro Option
-            input = new Scanner(new File("budget_auto_input_neg_intro.txt"));
-
-            // Another testing scenario - goes here
-//            input = new Scanner(new File("budget_auto_input.txt"));
-
-            // Another testing scenario - goes here
-//            input = new Scanner(new File("budget_auto_input.txt"));
+            input = new Scanner(new File("budget_auto_input.txt"));
         }
         catch (FileNotFoundException e) {
             System.err.println("Auto Input file not found.");
             System.exit(1);
         }
     }
-
 
     public static void main(String[] args) {
         System.out.println("Hey! Welcome to Eddie's Budget App!");
@@ -41,7 +31,7 @@ public class EddiesBudgetApp {
 
         // Validate user input and do not continue until they make a valid entry.
         while (!validOptions.contains(userResponse)) {
-            System.out.println("Invalid option. Please enter 1, 2, or 3:");
+            System.out.println("Invalid option. Please enter 1, 2, 3, 4:");
             userResponse = input.nextLine();
         }
 
@@ -58,14 +48,10 @@ public class EddiesBudgetApp {
     }
 
     public static void createBudget(Map<String, Budget> budgetList) {
-        //TODO: Give them the option to give each budget a name, do multiple budgets (a map with the name and budget
-        // as the value?)
-
         System.out.println("What would you like to name this budget?");
         String budgetName = input.nextLine();
         Budget budget = new Budget();
         budget.setBudgetName(budgetName);
-
 
         System.out.println("What is your monthly income post-tax on average? (no commas)");
         userResponse = input.nextLine();
@@ -89,9 +75,7 @@ public class EddiesBudgetApp {
         //  also make the logic to have them pick and choose which expense to edit.
 
         while (!userResponse.equalsIgnoreCase("DONE")) {
-            /* TODO: Add some logic to ask them are they sure and give them the option
-             *       to correct an entry (replace whole entry or the name / $ amount separately.
-             */
+
 
             expenseName = userResponse.split(",")[0].trim();
             double rawExpense = Double.parseDouble(userResponse.split(",")[1].trim());
@@ -109,15 +93,6 @@ public class EddiesBudgetApp {
 
         System.out.println("Your total expenses are: " + budget.tallyExpenses());
         budgetList.put(budgetName, budget);
-
-
-//        double remaining = expenseName;
-//        System.out.println("Currently, your budget is the following: ");
-
-
-
-
-
     }
 
     public static void modifyBudget(Map<String, Budget> budgetList) {
@@ -133,6 +108,10 @@ public class EddiesBudgetApp {
         userResponse = input.nextLine();
 
         budgetList.remove(budgetName);
+    }
+
+    public static void displayBudget() {
+        System.out.println();
     }
 
 }
