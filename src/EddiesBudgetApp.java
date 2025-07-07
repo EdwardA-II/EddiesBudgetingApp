@@ -128,7 +128,9 @@ public class EddiesBudgetApp {
         }
 
         System.out.println("Your total expenses are: " + budgetToDisplay.tallyExpenses());
-        System.out.println("So! Your remaining budget is: " + budgetToDisplay.getIncome().subtract(budgetToDisplay.totalExpenses));
+        BigDecimal totalExpenses = budgetToDisplay.totalExpenses;
+        BigDecimal remaining = budgetToDisplay.getIncome().subtract(totalExpenses);
+        System.out.println("So! Your remaining budget is: " + remaining);
     }
 
 }
