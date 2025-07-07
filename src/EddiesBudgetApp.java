@@ -93,7 +93,7 @@ public class EddiesBudgetApp {
 
         budget.setExpenses(expenses);
 
-        System.out.println("Your total expenses are: " + budget.tallyExpenses());
+//        System.out.println("Your total expenses are: " + budget.tallyExpenses());
         budgetList.put(budgetName, budget);
     }
 
@@ -115,13 +115,21 @@ public class EddiesBudgetApp {
     public static void displayBudget(Map<String, Budget> budgetList) {
         System.out.println("Which budget would you like to display?");
         String budgetName = input.nextLine();
+
         Budget budgetToDisplay = budgetList.get(budgetName);
+        Map<String, BigDecimal> budgetExpenses = budgetToDisplay.getExpenses();
+
         System.out.println("Your income is listed as: " + budgetToDisplay.getIncome());
 
-        //* TODO: how do i display the expense : expenseCost....? maybe it *should* be in the budget class.
-        for (String expenseName : budgetToDisplay.expenses.keySet()) {
-            System.out.println(budgetToDisplay.getExpenseName() + budgetToDisplay.getExpenseCost());
+        System.out.println("Your expenses are: ");
+
+        for (Map.Entry<String, BigDecimal> entry : budgetExpenses.entrySet()) {
+            System.out.println(entry.getKey() + " - " + "$" + entry.getValue());
         }
+
+        System.out.println("Your total expenses are: " + budgetToDisplay.tallyExpenses());
+//        System.out.println("So! Your remaining budget is: " + budgetToDisplay.getIncome() );
+//        budgetToDisplay.totalExpenses
     }
 
 }

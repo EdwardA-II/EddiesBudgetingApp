@@ -66,8 +66,4 @@ public class Budget {
         return this.totalExpenses;
     }
 
-    public void displayExpenses() {
-        for (String expenseName : expenses.keySet()) {
-        }
-    }
 }
