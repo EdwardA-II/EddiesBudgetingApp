@@ -7,7 +7,7 @@ public class Budget {
     Map<String, BigDecimal> expenses = new HashMap<>();
     String expenseName;
     BigDecimal expenseCost;
-    int income;
+    BigDecimal income;
     BigDecimal totalExpenses = BigDecimal.valueOf(0.0);
 
     // TODO: Add logic to remove an item from the budget in this method. Ask them what they wanna do and allat.
@@ -27,11 +27,11 @@ public class Budget {
         this.budgetName = budgetName;
     }
 
-    public int getIncome() {
+    public BigDecimal getIncome() {
         return income;
     }
 
-    public void setIncome(int income) {
+    public void setIncome(BigDecimal income) {
         this.income = income;
     }
 

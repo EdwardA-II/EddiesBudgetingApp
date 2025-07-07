@@ -63,7 +63,7 @@ public class EddiesBudgetApp {
         userResponse = input.nextLine();
         System.out.println();
 
-        int income = Integer.parseInt(userResponse);
+        BigDecimal income = new BigDecimal(userResponse);
         budget.setIncome(income);
 
         System.out.println("Your INCOME is listed as: " + budget.getIncome());
@@ -80,8 +80,8 @@ public class EddiesBudgetApp {
 
         while (!userResponse.equalsIgnoreCase("DONE")) {
             expenseName = userResponse.split(",")[0].trim();
-            double rawExpense = Double.parseDouble(userResponse.split(",")[1].trim());
-            expenseCost = BigDecimal.valueOf(rawExpense);
+            String rawExpense = userResponse.split(",")[1].trim();
+            expenseCost = new BigDecimal(rawExpense);
             expenses.put(expenseName, expenseCost);
 
             System.out.println( "You entered: " + expenseName + " : " + expenses.get(expenseName) );
@@ -128,7 +128,7 @@ public class EddiesBudgetApp {
         }
 
         System.out.println("Your total expenses are: " + budgetToDisplay.tallyExpenses());
-//        System.out.println("So! Your remaining budget is: " + budgetToDisplay.getIncome() );
+        System.out.println("So! Your remaining budget is: " + budgetToDisplay.getIncome().subtract(budgetToDisplay.totalExpenses));
 //        budgetToDisplay.totalExpenses
     }
 
