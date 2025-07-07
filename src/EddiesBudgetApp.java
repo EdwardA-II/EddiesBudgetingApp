@@ -129,7 +129,6 @@ public class EddiesBudgetApp {
 
         System.out.println("Your total expenses are: " + budgetToDisplay.tallyExpenses());
         System.out.println("So! Your remaining budget is: " + budgetToDisplay.getIncome().subtract(budgetToDisplay.totalExpenses));
-//        budgetToDisplay.totalExpenses
     }
 
 }
