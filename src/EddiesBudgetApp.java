@@ -9,8 +9,7 @@ public class EddiesBudgetApp {
 
     static {
         try {
-            // Negative Testing - Incorrect Intro Option
-            input = new Scanner(new File("budget_auto_input.txt"));
+            input = new Scanner(new File("budget_auto_input_delete_budget.txt"));
         }
         catch (FileNotFoundException e) {
             System.err.println("Auto Input file not found.");
@@ -21,37 +20,37 @@ public class EddiesBudgetApp {
     public static void main(String[] args) {
         System.out.println("Hey! Welcome to Eddie's Budget App!");
         System.out.println("What would you like to do today?");
-        System.out.println("Please enter \"1\" to Create Budget, \"2\" to Modify Budget, \"3\" to Delete Budget, or \"4\" to Exit the Application");
+        System.out.println("Please enter \"1\" to Create Budget, \"2\" to Modify Budget, \"3\" to Delete Budget, \"4\" to Display a Budget, or " +
+                "\"5\" to Exit the Application");
 
         userResponse = input.nextLine();
 
         Map<String, Budget> budgetList = new HashMap<>();
 
+        // Validate user input and do not continue until they make a valid entry.
         Set<String> validOptions = Set.of("1", "2", "3", "4", "5");
 
-        // Validate user input and do not continue until they make a valid entry.
         while (!validOptions.contains(userResponse)) {
             System.out.println("Invalid option. Please enter 1, 2, 3, 4, 5:");
             userResponse = input.nextLine();
         }
 
-        // TODO: surround this with another while loop so the customer can access other options? and maybe put the main menu in
-            // another method? if i use a while loop, the last display method wont be necessary.
-        // At this point, the userResponse is guaranteed to be valid
-        switch (userResponse) {
-            case "1" -> createBudget(budgetList);
-            case "2" -> modifyBudget(budgetList);
-            case "3" -> deleteBudget(budgetList);
-            case "4" -> displayBudget(budgetList);
-            case "5" -> {
-                System.out.println("Goodbye 👋");
-                System.exit(0);
+        while (!userResponse.equalsIgnoreCase("5")) {
+            switch (userResponse) {
+                case "1" -> createBudget(budgetList);
+                case "2" -> modifyBudget(budgetList);
+                case "3" -> deleteBudget(budgetList);
+                case "4" -> displayBudget(budgetList);
             }
+
+            userResponse = input.nextLine();
         }
 
-        displayBudget(budgetList);
+        System.out.println("Goodbye 👋");
+        System.exit(0);
 
     }
+
 
     public static void createBudget(Map<String, Budget> budgetList) {
         System.out.println("What would you like to name this budget?");
@@ -92,8 +91,6 @@ public class EddiesBudgetApp {
         }
 
         budget.setExpenses(expenses);
-
-//        System.out.println("Your total expenses are: " + budget.tallyExpenses());
         budgetList.put(budgetName, budget);
     }
 
@@ -101,7 +98,7 @@ public class EddiesBudgetApp {
     }
 
     public static void deleteBudget(Map<String, Budget> budgetList) {
-        System.out.println("Which budget would you like to delete");
+        System.out.print("Which budget would you like to delete:");
         userResponse = input.nextLine();
         String budgetName = userResponse;
 
@@ -109,7 +106,12 @@ public class EddiesBudgetApp {
         System.out.println("Enter Y/N");
         userResponse = input.nextLine();
 
-        budgetList.remove(budgetName);
+        if (userResponse.equalsIgnoreCase("Y")) {
+            budgetList.remove(budgetName);
+        }
+
+        System.out.println(budgetName + " has been deleted!");
+
     }
 
     public static void displayBudget(Map<String, Budget> budgetList) {

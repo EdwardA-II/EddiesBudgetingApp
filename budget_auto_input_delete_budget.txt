@@ -1,0 +1,14 @@
+1
+Groceries Budget
+4000
+Rent,1500
+Groceries,400.75
+Internet,80.69
+Phone,100.42
+DONE
+4
+Groceries Budget
+3
+Groceries Budget
+Y
+5
